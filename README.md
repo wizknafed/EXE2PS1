@@ -1,7 +1,7 @@
 # Exe to PS1 Converter
 
 <div align="center">
-    <img src="https://files.catbox.moe/8fnzct.png" alt="Exe to PS1 Converter Banner" width="80%" />
+    <img src="https://files.catbox.moe/pollcd.png" alt="Exe to PS1 Converter Banner" width="80%" />
 </div>
 
 Welcome to the **Exe to PS1 Converter** website! This tool allows users to easily convert `.exe` files into `.ps1` (PowerShell script) files. It's built using **React** and **TypeScript** to provide a modern, responsive, and fast user interface.
