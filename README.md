@@ -1,29 +1,45 @@
-# Exe to PS1 Converter
+<p align="center">
+  <img 
+    src="https://files.catbox.moe/pollcd.png" 
+    alt="Exe to PS1 Converter Banner" 
+    width="60%"
+    style="border-radius: 12px;"
+  />
+</p>
 
-<div align="center">
-    <img src="https://files.catbox.moe/pollcd.png" alt="Exe to PS1 Converter Banner" width="60%" />
-</div>
+<h1 align="center">Exe to PS1 Converter</h1>
 
-Welcome to the **Exe to PS1 Converter** website! This tool allows users to easily convert `.exe` files into `.ps1` (PowerShell script) files. It's built using **React** and **TypeScript** to provide a modern, responsive, and fast user interface.
+<p align="center">
+  A simple and flexible tool to convert `.exe` files into `.ps1` PowerShell scripts.
+</p>
 
-## Features
+<p align="center">
+  Built with <b>React</b> and <b>TypeScript</b>, designed to make PowerShell script conversion easy and fast.
+</p>
 
-- **Convert .exe to .ps1**: Upload your `.exe` file and download the converted `.ps1` file.
-- **Simple Interface**: User-friendly and easy-to-navigate interface built with React.
-- **Fast Conversion**: Efficient conversion process to get your PowerShell scripts ready quickly.
+---
 
-## Technologies Used
+## 🧠 Overview
 
-- **React**: Front-end framework to build the user interface.
-- **TypeScript**: For type safety and to improve development experience.
-- **Node.js**: Backend for handling file uploads and conversions.
-- **Express**: A minimal web framework for routing and API calls.
+**Please remember to use this tool responsibly and ethically.**
 
-## Installation
+The Exe to PS1 Converter is lightweight and customizable for your needs. It was built to simplify the process of converting `.exe` files into `.ps1` scripts for educational and practical purposes.
 
-To get started with the Exe to PS1 Converter locally, follow these steps:
+---
 
-### 1. Clone the repository
+## ✨ Features
+
+- ⚛️ React-based UI for a responsive and modern design
+- 🔧 Written in TypeScript for better type safety and structure
+- ⚡ Powered by Vite for fast and smooth development experience
+- 🧩 Easy to modify for different types of file conversions
+- 🧼 Clean and readable project structure, great for future contributions
+
+---
+
+## 🚀 Getting Started
+
+### 🔁 Clone the repository
 
 ```bash
 git clone https://github.com/your-username/exe-to-ps1-converter.git
