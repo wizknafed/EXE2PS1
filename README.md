@@ -2,7 +2,7 @@
   <img 
     src="https://files.catbox.moe/pollcd.png" 
     alt="Exe to PS1 Converter Banner" 
-    width="40%"
+    width="30%"
     style="border-radius: 12px;"
   />
 </p>
