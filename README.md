@@ -7,7 +7,7 @@
   />
 </p>
 
-<h1 align="center">EXE2PS1 **EXE To Ps1 Converter**</h1>
+<h1 align="center">EXE2PS1 | EXE To Ps1 Converter</h1>
 
 <p align="center">
   A simple and flexible tool to convert `.exe` files into `.ps1` PowerShell scripts.
