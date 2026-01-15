@@ -1,20 +1,28 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Exe to PS1 Converter
 
-# Run and deploy your AI Studio app
+![Exe to PS1 Converter Banner](https://files.catbox.moe/8fnzct.png)
 
-This contains everything you need to run your app locally.
+Welcome to the **Exe to PS1 Converter** website! This tool allows users to easily convert `.exe` files into `.ps1` (PowerShell script) files. It's built using **React** and **TypeScript** to provide a modern, responsive, and fast user interface.
 
-View your app in AI Studio: https://ai.studio/apps/temp/1
+## Features
 
-## Run Locally
+- **Convert .exe to .ps1**: Upload your `.exe` file and download the converted `.ps1` file.
+- **Simple Interface**: User-friendly and easy-to-navigate interface built with React.
+- **Fast Conversion**: Efficient conversion process to get your PowerShell scripts ready quickly.
 
-**Prerequisites:**  Node.js
+## Technologies Used
 
+- **React**: Front-end framework to build the user interface.
+- **TypeScript**: For type safety and to improve development experience.
+- **Node.js**: Backend for handling file uploads and conversions.
+- **Express**: A minimal web framework for routing and API calls.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Installation
+
+To get started with the Exe to PS1 Converter locally, follow these steps:
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/exe-to-ps1-converter.git
+cd exe-to-ps1-converter
