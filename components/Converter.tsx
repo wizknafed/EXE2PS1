@@ -13,7 +13,6 @@ const Converter: React.FC = () => {
 
   const processFile = async (file: File) => {
     if (!file) return;
-    
     if (!file.name.toLowerCase().endsWith('.exe')) {
       if (!confirm("Proceed with non-EXE file?")) return;
     }
@@ -21,13 +20,10 @@ const Converter: React.FC = () => {
     setBusy(true);
     setErr(null);
     setRes(null);
-    
     try {
-      await new Promise(r => setTimeout(r, 600));
-      
+      await new Promise(r => setTimeout(r, 1200)); // Sustained feel
       const b64 = await fileToBase64(file);
       const code = generatePowerShellScript(file.name, b64);
-      
       setRes({
         fileName: file.name,
         originalSize: file.size,
@@ -71,138 +67,230 @@ const Converter: React.FC = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto py-16 px-6">
-      <motion.div 
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-12"
-      >
-        <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
-          Drop. <span className="text-indigo-500">Convert.</span> Run.
-        </h2>
-        <p className="text-slate-400 text-lg">
-          Zero-installation binary to PowerShell script conversion.
-        </p>
-      </motion.div>
+    <div className="min-h-screen bg-[#050506] text-slate-300 font-sans selection:bg-indigo-500/30">
+      <style>{`
+        .monolith-brushed {
+          background: linear-gradient(135deg, #111114 0%, #09090b 100%);
+          position: relative;
+          overflow: hidden;
+        }
+        .monolith-brushed::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-image: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 1px,
+            rgba(255,255,255,0.015) 1px,
+            rgba(255,255,255,0.015) 2px
+          );
+          pointer-events: none;
+        }
+        .tectonic-edge {
+          box-shadow: 
+            0 -1px 0 0 rgba(255,255,255,0.05),
+            0 1px 0 0 rgba(0,0,0,0.8),
+            inset 0 1px 1px 0 rgba(255,255,255,0.05);
+        }
+        .scanner-line {
+          height: 2px;
+          background: linear-gradient(90deg, transparent, #6366f1, transparent);
+          width: 100%;
+          position: absolute;
+          z-index: 30;
+          top: 0;
+          animation: scan 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        @keyframes scan {
+          0% { transform: translateY(0); opacity: 0; }
+          50% { opacity: 1; }
+          100% { transform: translateY(400px); opacity: 0; }
+        }
+        .code-font { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+      `}</style>
 
-      <motion.div
-        layout
-        className={`relative group glass rounded-[2rem] border-2 transition-all duration-500 overflow-hidden
-          ${dragging ? 'border-indigo-500 ring-4 ring-indigo-500/10 scale-[1.01]' : 'border-white/5 hover:border-white/10'}`}
-        onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
-        onDragLeave={() => setDragging(false)}
-        onDrop={handleDrop}
-        onClick={() => inputRef.current?.click()}
-      >
-        <input 
-          type="file" 
-          ref={inputRef} 
-          className="hidden" 
-          onChange={(e) => e.target.files?.[0] && processFile(e.target.files[0])}
-          accept=".exe"
-        />
-        
-        <div className="p-12 md:p-20 text-center flex flex-col items-center justify-center cursor-pointer">
-          <div className="mb-6 relative">
-            <div className={`w-20 h-20 rounded-2xl flex items-center justify-center transition-all duration-500
-              ${dragging ? 'bg-indigo-500 text-white shadow-2xl shadow-indigo-500/40 rotate-6' : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'}`}>
-               <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-               </svg>
+      <div className="max-w-4xl mx-auto py-24 px-6 relative">
+        {/* Header Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-20 text-center"
+        >
+          <div className="inline-block px-3 py-1 mb-6 rounded-full border border-white/5 bg-white/5 text-[10px] font-bold tracking-[0.2em] uppercase text-indigo-400">
+            Secure Binary Obfuscation
+          </div>
+          <h1 className="text-6xl md:text-8xl font-black text-white mb-6 tracking-tighter italic">
+            BINARY<span className="text-indigo-500">.</span>PS1
+          </h1>
+          <p className="text-slate-500 text-xl max-w-xl mx-auto font-light leading-relaxed">
+            Encapsulate executables into portable PowerShell scripts with tectonic-grade reliability.
+          </p>
+        </motion.div>
+
+        {/* Interaction Zone */}
+        <motion.div
+          layout
+          className={`monolith-brushed tectonic-edge rounded-sm transition-all duration-700 ease-out 
+            ${dragging ? 'scale-[1.02] ring-1 ring-indigo-500/50' : 'scale-100 ring-1 ring-white/5'}`}
+          onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+          onDragLeave={() => setDragging(false)}
+          onDrop={handleDrop}
+          onClick={() => inputRef.current?.click()}
+        >
+          <input 
+            type="file" 
+            ref={inputRef} 
+            className="hidden" 
+            onChange={(e) => e.target.files?.[0] && processFile(e.target.files[0])}
+            accept=".exe"
+          />
+          
+          <div className="relative h-[400px] flex flex-col items-center justify-center cursor-pointer group">
+            {busy && <div className="scanner-line" />}
+            
+            {/* Visual Centerpiece */}
+            <div className="relative mb-8">
+               <motion.div 
+                animate={dragging ? { rotate: 180, scale: 1.1 } : { rotate: 0, scale: 1 }}
+                className="w-24 h-24 border border-white/10 flex items-center justify-center bg-black/40 backdrop-blur-xl relative z-10"
+               >
+                 <svg className={`w-8 h-8 transition-colors duration-500 ${busy ? 'text-indigo-500 animate-pulse' : 'text-slate-400 group-hover:text-white'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                   <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={1} d="M12 4v16m8-8H4" />
+                 </svg>
+               </motion.div>
+               {/* Decorative corners */}
+               <div className="absolute -top-2 -left-2 w-4 h-4 border-t border-l border-indigo-500/50" />
+               <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b border-r border-indigo-500/50" />
+            </div>
+
+            <div className="text-center space-y-2">
+              <h3 className="text-sm font-bold tracking-[0.3em] uppercase text-white">
+                {busy ? "Analyzing Structure" : "Initialize Transfer"}
+              </h3>
+              <p className="text-xs text-slate-600 uppercase tracking-widest font-medium">
+                {busy ? "Encoding Stream..." : "Drop Executable or Click to Browse"}
+              </p>
+            </div>
+
+            {/* Background Texture Logic */}
+            <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
+               <div className="absolute top-0 left-0 p-4 text-[8px] font-mono text-indigo-500 uppercase tracking-tight">System.Ready</div>
+               <div className="absolute bottom-0 right-0 p-4 text-[8px] font-mono text-indigo-500 uppercase tracking-tight line-through opacity-50">Log_Null</div>
             </div>
           </div>
-          
-          <h3 className="text-xl font-semibold text-slate-200 mb-2">
-            {busy ? "Encoding..." : "Choose an executable"}
-          </h3>
-          <p className="text-slate-500 font-medium">or drag & drop here</p>
-        </div>
 
-        {busy && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm z-20 flex flex-col items-center justify-center"
-          >
-            <div className="relative w-12 h-12 mb-4">
-              <div className="absolute inset-0 border-4 border-indigo-500/20 rounded-full"></div>
-              <div className="absolute inset-0 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-            <p className="text-white font-bold tracking-widest text-xs animate-pulse">PROCESSING</p>
-          </motion.div>
-        )}
-      </motion.div>
+          <AnimatePresence>
+            {busy && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-black/60 backdrop-blur-[2px] z-20 flex items-center justify-center"
+              >
+                <div className="text-center">
+                  <div className="flex gap-1 mb-4 justify-center">
+                    {[0, 1, 2].map(i => (
+                      <motion.div 
+                        key={i}
+                        animate={{ height: [8, 24, 8] }}
+                        transition={{ repeat: Infinity, duration: 0.6, delay: i * 0.1 }}
+                        className="w-1 bg-indigo-500"
+                      />
+                    ))}
+                  </div>
+                  <span className="text-[10px] font-bold tracking-[0.4em] text-white uppercase">Processing Data</span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
 
-      <AnimatePresence>
-        {err && (
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            className="mt-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center gap-3 text-red-400 text-sm font-medium"
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-            </svg>
-            {err}
-          </motion.div>
-        )}
+        {/* Feedback Messages */}
+        <AnimatePresence mode="wait">
+          {err && (
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              className="mt-8 p-5 bg-red-950/20 border-l-2 border-red-500 text-red-400 text-xs font-bold uppercase tracking-widest flex items-center gap-4"
+            >
+              <span className="w-2 h-2 bg-red-500 rounded-full animate-ping" />
+              {err}
+            </motion.div>
+          )}
 
-        {res && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-10 space-y-6"
-          >
-            <div className="glass rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-5">
-                 <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-400">
-                    <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          {res && (
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-12 space-y-4"
+            >
+              {/* Result Slab */}
+              <div className="monolith-brushed tectonic-edge p-8 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 bg-white/5 border border-white/10 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="square" strokeWidth={1.5} d="M9 12l2 2 4-4" />
                     </svg>
-                 </div>
-                 <div>
-                    <h3 className="text-xl font-bold text-white mb-1 truncate max-w-[200px] md:max-w-xs">{res.fileName}.ps1</h3>
-                    <div className="flex items-center gap-3 text-sm text-slate-500">
-                       <span className="font-mono">{formatBytes(res.originalSize)}</span>
-                       <span className="w-1 h-1 bg-slate-700 rounded-full"></span>
-                       <span>Ready</span>
+                  </div>
+                  <div className="space-y-1">
+                    <h4 className="text-lg font-bold text-white tracking-tight truncate max-w-[240px]">
+                      {res.fileName}.ps1
+                    </h4>
+                    <div className="flex items-center gap-3 text-[10px] uppercase tracking-widest font-bold text-slate-500">
+                      <span>{formatBytes(res.originalSize)}</span>
+                      <span className="text-indigo-900">|</span>
+                      <span className="text-indigo-400">Status: Encoded</span>
                     </div>
-                 </div>
-              </div>
-              <div className="flex items-center gap-3 w-full md:w-auto">
-                 <button 
-                   onClick={doCopy}
-                   className={`flex-1 md:flex-none px-6 py-3 rounded-xl transition-all duration-300 font-bold text-sm flex items-center justify-center gap-2
-                     ${didCopy ? 'bg-green-500 text-white' : 'bg-slate-800 text-slate-200 hover:bg-slate-700'}`}
-                 >
-                   {didCopy ? "Copied" : "Copy"}
-                 </button>
-                 <button 
-                   onClick={doDownload}
-                   className="flex-1 md:flex-none px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition-all duration-300 font-bold text-sm shadow-xl shadow-indigo-600/20"
-                 >
-                   Download
-                 </button>
-              </div>
-            </div>
+                  </div>
+                </div>
 
-            <div className="glass rounded-[2rem] overflow-hidden border border-white/5">
-              <div className="bg-white/5 px-8 py-3 flex items-center justify-between">
-                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Preview (Truncated)</span>
+                <div className="flex items-center gap-2 w-full md:w-auto">
+                  <button 
+                    onClick={doCopy}
+                    className={`flex-1 md:flex-none h-14 px-8 text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300
+                      ${didCopy ? 'bg-indigo-500 text-white' : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'}`}
+                  >
+                    {didCopy ? "Copied" : "Copy Source"}
+                  </button>
+                  <button 
+                    onClick={doDownload}
+                    className="flex-1 md:flex-none h-14 px-10 bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(79,70,229,0.3)] transition-all"
+                  >
+                    Download
+                  </button>
+                </div>
               </div>
-              <div className="p-8 bg-slate-950/40">
-                <pre className="code-font text-xs leading-relaxed text-indigo-300/60 whitespace-pre overflow-hidden">
-                  {res.ps1Code.split('\n').slice(0, 10).join('\n')}
-                  {"\n"}[...] Payload Hidden to Prevent Lag
-                </pre>
+
+              {/* Preview Slab */}
+              <div className="monolith-brushed tectonic-edge overflow-hidden border border-white/5">
+                <div className="bg-white/5 px-6 py-3 border-b border-white/5 flex items-center justify-between">
+                  <span className="text-[9px] font-black text-slate-500 uppercase tracking-[0.3em]">Code Preview // Truncated</span>
+                  <div className="flex gap-1.5">
+                    <div className="w-2 h-2 rounded-full bg-white/10" />
+                    <div className="w-2 h-2 rounded-full bg-white/10" />
+                  </div>
+                </div>
+                <div className="p-8 bg-[#020203]">
+                  <pre className="code-font text-[11px] leading-relaxed text-indigo-300/40 whitespace-pre overflow-hidden italic">
+                    {res.ps1Code.split('\n').slice(0, 8).join('\n')}
+                    {"\n"}...
+                    {"\n"}# [PAYLOAD SEALED FOR PERFORMANCE]
+                  </pre>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+      
+      {/* Structural Decoration */}
+      <div className="fixed bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent" />
     </div>
   );
 };
 
 export default Converter;
+
