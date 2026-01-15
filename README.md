@@ -42,5 +42,6 @@ The Exe to PS1 Converter is lightweight and customizable for your needs. It was 
 ### 🔁 Clone the repository
 
 ```bash
-git clone https://github.com/your-username/exe-to-ps1-converter.git
-cd exe-to-ps1-converter
+git clone https://github.com/wizknafed/EXE2PS1.git
+cd EXE2PS1
+
